@@ -33,20 +33,20 @@ Below is a Mermaid diagram illustrating the system's high-level flow:
 
 ```mermaid
 flowchart TB
-    A[Create Investor] --> B{Store in DiceDB <br> "investor:<ID>"}
+    A[Create Investor] --> B[Store in DiceDB]
     B --> C[Generate 6-digit ID]
 
-    D[Subscribe Investor] --> E[Load investor from DiceDB <br> if not in memory]
-    E --> F[RegisterObserver(investor)]
+    D[Subscribe Investor] --> E[Load from DiceDB]
+    E --> F[Register Observer]
 
-    G[SetStockPrice(symbol, newPrice)] --> H[Get oldPrice from <br> DiceDB "stock:<symbol>"]
-    H --> I[Compare with newPrice <br> and compute %change]
-    I --> J{If priceChange >= threshold?}
-    J -- No --> K[Just store newPrice]
-    J -- Yes --> L[NotifyObservers()]
-    L --> M[Observers Update()]
+    G[Set Stock Price] --> H[Get Old Price]
+    H --> I[Calculate Change]
+    I --> J{Threshold Check}
+    J -- Below --> K[Store Price]
+    J -- Above --> L[Notify All]
+    L --> M[Update Observers]
 
-    K --> N[LPUSH history <br> "history:<symbol>"]
+    K --> N[Update History]
     L --> N
 
     style A fill:#f99,stroke:#333,stroke-width:1px
