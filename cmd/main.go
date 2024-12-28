@@ -15,7 +15,7 @@ import (
 
 func main() {
     // Connect to DiceDB
-    host := "20.204.32.147"
+    host := "localhost"
     port := 8538
     ctx, cancel := context.WithCancel(context.Background())
     defer cancel()
